@@ -8,7 +8,7 @@ import retrofit2.Response
 
 class CreateNewUserViewModel : ViewModel() {
 
-
+    //MutableLiveData в который помещаются данные с UserResponse
     lateinit var createNewUserLiveData: MutableLiveData<UserResponse?>
     lateinit var loadUserData: MutableLiveData<UserResponse?>
     lateinit var deleteUserLiveData: MutableLiveData<UserResponse?>
@@ -31,6 +31,7 @@ class CreateNewUserViewModel : ViewModel() {
         return  loadUserData
     }
 
+//заполнение данными user responce
     fun createUser(user: User) {
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.createUser(user)
@@ -48,7 +49,7 @@ class CreateNewUserViewModel : ViewModel() {
             }
         })
     }
-
+    //обновление данных user responce
     fun updateUser(user_id: String, user: User) {
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.updateUser(user_id, user)
@@ -66,7 +67,7 @@ class CreateNewUserViewModel : ViewModel() {
             }
         })
     }
-
+    //удаление из user responce
     fun deleteUser(user_id: String?) {
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.deleteUser(user_id!!)
@@ -85,6 +86,7 @@ class CreateNewUserViewModel : ViewModel() {
         })
     }
 
+    //получение данных из user responce
     fun getUserData(user_id: String?) {
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.getUser(user_id!!)

@@ -13,25 +13,30 @@ class CreateNewUserActivity : AppCompatActivity() {
 
     lateinit var viewModel: CreateNewUserViewModel
 
+//В теле функции onCreate базовая логика приложения
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_new_user)
 
+    //получение id
         val user_id = intent.getStringExtra("user_id")
         initViewModel()
         createUserObservable()
 
+    //получение списка юзеров
         if(user_id != null) {
             loadUserData(user_id)
         }
+    //создание пользователя
         createButton.setOnClickListener {
             createUser(user_id)
         }
+    //удаление пользователя
         deleteButton.setOnClickListener {
             deleteUser(user_id)
         }
     }
-
+//проверка id при удалении
     private fun deleteUser(user_id: String?) {
         viewModel.getDeleteUserObservable().observe(this, Observer <UserResponse?>{
             if(it == null) {
@@ -41,6 +46,7 @@ class CreateNewUserActivity : AppCompatActivity() {
                 finish()
             }
         })
+    //диалоговое окно при удалении
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Удалить пользователя")
         builder.setMessage("При нажатии на кнопку вы удалить пользователя, вы уверены?")
@@ -52,6 +58,7 @@ class CreateNewUserActivity : AppCompatActivity() {
         }
         builder.show()
     }
+    //загрузка профиля
     private fun loadUserData(user_id: String?) {
         viewModel.getLoadUserObservable().observe(this, Observer <UserResponse?>{
             if(it != null) {
@@ -63,11 +70,13 @@ class CreateNewUserActivity : AppCompatActivity() {
         })
         viewModel.getUserData(user_id)
     }
+    //создание пользователя или обновление
     private fun createUser(user_id: String?){
         val user = User("", editTextName.text.toString(), editTextEmail.text.toString(), "Active", "Male")
 
         if(user_id == null)
             viewModel.createUser(user)
+        //диалоговое окно при обновлении
         else{
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Обновить данные")
@@ -82,11 +91,7 @@ class CreateNewUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(this).get(CreateNewUserViewModel::class.java)
-
-    }
-
+    // проверка id при создании
     private fun createUserObservable() {
         viewModel.getCreateNewUserObservable().observe(this, Observer <UserResponse?>{
             if(it == null) {
@@ -96,5 +101,9 @@ class CreateNewUserActivity : AppCompatActivity() {
                 finish()
             }
         })
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this).get(CreateNewUserViewModel::class.java)
     }
 }

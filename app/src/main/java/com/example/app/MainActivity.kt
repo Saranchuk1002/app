@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnItemClickListene
         }
     }
 
+    //поиск пользователей
     private fun searchUser() {
         search_button.setOnClickListener {
             if(!TextUtils.isEmpty(searchEditText.text.toString())) {
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnItemClickListene
         }
     }
 
+    //проверка, можно ли получить данные из из user list
     fun initViewModel() {
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         viewModel.getUserListObserverable().observe(this, Observer<UserList> {
@@ -56,12 +58,14 @@ class MainActivity : AppCompatActivity(), RecyclerViewAdapter.OnItemClickListene
                 Toast.makeText(this@MainActivity, "Результатов не найдено...", Toast.LENGTH_LONG).show()
             } else {
                 recyclerViewAdapter.userList = it.data.toMutableList()
+                // метод, отслеживающий добавление, удаление или изменение позиции одного элемента
                 recyclerViewAdapter.notifyDataSetChanged()
             }
         })
         viewModel.getUsersList()
     }
 
+    //обновление в реальном времени
     override fun onItemEditCLick(user: User) {
         val intent = Intent(this@MainActivity, CreateNewUserActivity::class.java)
         intent.putExtra("user_id", user.id)

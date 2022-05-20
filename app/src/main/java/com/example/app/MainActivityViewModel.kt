@@ -20,8 +20,8 @@ class MainActivityViewModel: ViewModel() {
         return recyclerListData
     }
 
+    //получение данных из user list
     fun getUsersList() {
-
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)
         val call = retroInstance.getUsersList()
         call.enqueue(object : Callback<UserList>{
@@ -39,6 +39,7 @@ class MainActivityViewModel: ViewModel() {
         })
     }
 
+    //поиск данных из user list
     fun searchUser(searchText: String) {
 
         val retroInstance = RetroInstance.getRetroInstance().create(RetroService::class.java)

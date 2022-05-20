@@ -39,16 +39,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
-    <Button android:id="@+id/deleteButton"
+    <Button
+        android:id="@+id/deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/createButton"
-        android:hint="Delete"
-        android:textStyle="bold"
         android:layout_margin="10dp"
+        android:hint="Удалить"
+        android:textStyle="bold"
         android:visibility="gone"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
